@@ -1,11 +1,11 @@
 // global variables
-var value
+
 //is the title
 var title = document.querySelector("h1");
 // displays questions
 var question = document.querySelector(".question");
 // displays answers
-var answers = document.querySelector('form');
+var answers = document.querySelector('span');
 // radio button text
 var answer1Text = document.querySelector('.label1')
 var answer2Text = document.querySelector('.label2')
@@ -18,6 +18,12 @@ var radio2 = document.getElementById('answer2');
 var radio3 = document.getElementById('answer3');
 var radio4 = document.getElementById('answer4');
 
+// radio1.checked = true;
+// radio2.checked = false;
+// radio3.checked = false;
+// radio4.checked = false;
+
+
 //footer for showing if answer is correct or not
 var userAnswers = document.querySelector(".userAnswers");
 // start button
@@ -26,30 +32,31 @@ var button = document.querySelector(".submit");
 // submit buttons
 var buttonSubmit = document.getElementById("submit");
 buttonSubmit.setAttribute("style", "visibility: hidden")
-
 //timer
 var timerEl = document.querySelector(".timer");
 var timeLeft = 60 ;
-var timeInterval;
 
 // var for the answers array
 var allAnswers ;
 // var for answers correct/incorrect
-var currentScore = 0;
-var scoreAdder = 1
+var currentScore
 
-var totalScore = 0 ;
+var right = localStorage.getItem("right") // right answer counter
 
+var userCorrect = 0;
+var userCorrectPoints = 1
 
-function correctAnswer (){
-  totalScore = currentScore += scoreAdder ;
-}
+const correct = userCorrect += userCorrectPoints ;
+var userCorrectPointDisplay = correct
+
+var currentQuestion = 1
+
 
 button.textContent = "Start";
 buttonSubmit.textContent = "Submit"
 
 timerEl.textContent = `There are ${timeLeft} seconds remaining...`;
-var incorrect = 5;
+
 //timer function, set to 60 seconds
 function countdown() {
   var timeLeft = 60;
@@ -87,35 +94,36 @@ function startQuiz() {
   return
 }
 
-// var questions = [
-//   {
-//     question: "1. This will be the first question of the quiz.",
-//     answers: [
-//       { text: "A. This is the answer to question 1!!!!!!", isCorrect: true },
-//       { text: "B. This is the answer to question 1", isCorrect: false },
-//       { text: "C. This is the answer to question 1", isCorrect: false },
-//       { text: "D. This is the answer to question 1", isCorrect: false }
-//     ]
-//   }
-// ]
+// clears radio buttons
+function clearRadio () {
+  radio1.checked = false;
+  radio2.checked = false;
+  radio3.checked = false;
+  radio4.checked = false;
+}
+// adds truth function back to radio buttons
+function addTruth () {
+  radio1.addEventListener("change",radio1Truth) ;
+  radio2.addEventListener("change", radio2Truth); 
+  radio3.addEventListener("change", radio3Truth) ;
+  radio4.addEventListener("change", radio4Truth) ;
+}
 
-// start the game
-// get the current question (0 for starters)
+function radio1Truth () { 
+  radio1.checked = true;
+}
 
-// function showCurrentQuestion(){
-//   var currQuestionObj = questions[currentQuestion]
-//   var radioBtns = document.querySelectorAll("input[type=radio]")
-//   var labels = document.querySelectorAll("label")
-//   console.log(radioBtns)
+function radio2Truth () {
+  radio2.checked = true ;
+}
 
-//   currQuestionObj.answers.forEach( function(answer, idx) {
-//     labels[idx].textContent = answer.text
-//     if(answer.isCorrect === true){
-//       radioBtns[idx].setAttribute("data-correct")
-//     }
-//   })
+function radio3Truth () {
+  radio3.checked = true ;  
+}
 
-// }
+function radio4Truth () {
+  radio4.checked = true;
+}
 
 // asking question one
 function questionOne() {
@@ -131,31 +139,34 @@ function questionOne() {
     {
       info: answer4Text.textContent = "D. This is not the answer to question 1"}
   ]
-  buttonSubmit.addEventListener("click",isAnswerRight1);
+  buttonSubmit.addEventListener("click", isAnswerRight1);
 }
 
 // checking if answer one is correct
 function isAnswerRight1(){
-  buttonSubmit.removeEventListener('click', isAnswerRight1);
+  currentQuestion = 2;
   if (radio1.checked) { // correct one
     userAnswers.textContent = "Correct!" // correct one
-    correctAnswer();
-    console.log(totalScore) ;
-    questionTwo()
+    radio1.checked = false;
+    questionTwo();
+    console.log(userCorrectPointDisplay) ;
 } else if (radio2.checked) {
   userAnswers.textContent = "Incorrect!"
-  console.log(totalScore) ;
-  questionTwo()
+  radio2.checked = false;
+  console.log(userCorrectPointDisplay) ;
+  questionTwo() ;
 } else if (radio3.checked) {
   userAnswers.textContent = "Incorrect!"
-  questionTwo()
+  radio3.checked = false ;
+  questionTwo();
 } else if (radio4.checked) {
   userAnswers.textContent = "Incorrect!"
-  console.log(totalScore) ;
-  questionTwo()
+  radio4.checked = false;
+  console.log(userCorrectPointDisplay) ;
+  questionTwo() ;
 } else {
   userAnswers.textContent = "Please select an answer to continue."
-  console.log(totalScore) ;
+  console.log(userCorrectPointDisplay) ;
   questionOne();
 }
 }
@@ -176,32 +187,38 @@ function questionTwo() {
     {
       info: answer4Text.textContent = "D. This is not the answer to question 2"}
   ]
-  buttonSubmit.addEventListener("click", isAnswerRight2);
+  
+  
 }
 // checking if answer 2 is correct
 function isAnswerRight2(event){
-  buttonSubmit.removeEventListener('click', isAnswerRight2);
+  currentQuestion = 3;
   if (radio1.checked) {
     userAnswers.textContent = "Incorrect!"
-    console.log(totalScore)
+    radio1.checked = false ;
+    questionThree() ;
+    console.log(userCorrectPointDisplay)
 } else if (radio2.checked) { // correct one
+  correct
   userAnswers.textContent = "Correct!"
-  correctAnswer();
-  console.log(totalScore)
+  radio2.checked = false ;
+  console.log(userCorrectPointDisplay)
+  questionThree() ;
 } else if (radio3.checked) {
   userAnswers.textContent = "Incorrect!"
-  console.log(totalScore)
-
+  radio3.checked = false;
+  console.log(userCorrectPointDisplay)
+  questionThree() ;
 } else if (radio4.checked) {
   userAnswers.textContent = "Incorrect!"
-  console.log(totalScore)
-
+  radio4.checked = false ;
+  console.log(userCorrectPointDisplay)
+  questionThree() ;
 } else {
   userAnswers.textContent = "Please select an answer to continue."
-  console.log(totalScore)
+  console.log(userCorrectPointDisplay)
   questionTwo();
-}
-questionThree() ;} ;
+}} ;
 
 // asking question three
 function questionThree() {
@@ -220,28 +237,41 @@ function questionThree() {
   buttonSubmit.addEventListener("click", isAnswerRight3);
 } ;
 
+function isAnswerRight(){
+  if( currentQuestion === 1 ){
+    isAnswerRight1()
+  } else if (currentQuestion === 2 ){
+    isAnswerRight2()
+  }
+}
+
 function isAnswerRight3(){
-  buttonSubmit.removeEventListener('click', isAnswerRight3);
-  if (radio1.checked) { 
+  if (radio1.checked) { // correct one
+    radio1.checked = false;
     userAnswers.textContent = "Incorrect!"
-    console.log(totalScore) ;
-    
+    questionFour();
+    console.log(userCorrectPointDisplay) ;
 } else if (radio2.checked) {
   userAnswers.textContent = "Incorrect!"
-  console.log(totalScore) ;
-
+  radio2.checked = false;
+  console.log(userCorrectPointDisplay) ;
+  questionFour();
 } else if (radio3.checked) {
   userAnswers.textContent = "Incorrect!"
-  console.log(totalScore) ;
+  radio3.checked = false;
+  console.log(userCorrectPointDisplay) ;
+  questionFour();
 } else if (radio4.checked) {
   userAnswers.textContent = "Correct!" // correct one
-  correctAnswer();
-  console.log(totalScore) ;
+  correct
+  console.log(userCorrectPointDisplay) ;
+  radio4.checked = false;
+  questionFour();
 } else {
   userAnswers.textContent = "Please select an answer to continue."
-  console.log(totalScore) ;
+  console.log(userCorrectPointDisplay) ;
   questionThree();
-} questionFour()}
+}}
 
 //question four function
 function questionFour() {
@@ -263,65 +293,83 @@ function questionFour() {
 
 // checking if answer 4 is right
 function isAnswerRight4(){
-  buttonSubmit.removeEventListener('click', isAnswerRight4);
   if (radio1.checked) { // correct one
     userAnswers.textContent = "Correct!" // correct one
-    correctAnswer();
-    calculateScore(totalScore);
-    console.log(totalScore) ;
+    correct
+    questionFive();
+    console.log(userCorrectPointDisplay) ;
 } else if (radio2.checked) {
   userAnswers.textContent = "Incorrect!"
-  console.log(totalScore) ;
-  calculateScore(totalScore);
+  console.log(userCorrectPointDisplay) ;
+  questionFive();
 } else if (radio3.checked) {
   userAnswers.textContent = "Incorrect!"
-  console.log(totalScore) ;
-  calculateScore(totalScore);
+  console.log(userCorrectPointDisplay) ;
+  questionFive();
 } else if (radio4.checked) {
   userAnswers.textContent = "Incorrect!"
-  console.log(totalScore) ;
-  calculateScore (totalScore);
+  console.log(userCorrectPointDisplay) ;
+  questionFive();
 } else {
   userAnswers.textContent = "Please select an answer to continue."
-  console.log(totalScore) ;
+  console.log(userCorrectPointDisplay) ;
   questionFour();
 }} ;
 
-function calculateScore (x) {
+// displays question 5
+function questionFive() {
+
+  question.textContent = "5. This will be the fifth question of the quiz.";
+
+  allAnswers = [
+    {
+      info: answer1Text.textContent = "A. This is not the answer to question 4"},
+    {
+      info: answer2Text.textContent = "B. This is not the answer to question 4"},
+    {
+      info: answer3Text.textContent = "C. This is the answer to question 4"},
+    {
+      info: answer4Text.textContent = "D. This is not the answer to question 4"}
+    ]
+  buttonSubmit.addEventListener("click", isAnswerRight5);
+} ;
+
+// checking if answer 5 is correct
+function isAnswerRight5 () {
+  if (radio1.checked) { 
+    userAnswers.textContent = "Incorrect!"
+    showScore();
+    console.log(userCorrectPointDisplay) ;
+} else if (radio2.checked) {
+  userAnswers.textContent = "Incorrect!"
+  console.log(userCorrectPointDisplay) ;
+  showScore();
+} else if (radio3.checked) {
+  userAnswers.textContent = "Correct!" // correct one
+  correct
+  console.log(userCorrectPointDisplay) ;
+  showScore();
+} else if (radio4.checked) {
+  userAnswers.textContent = "Incorrect!"
+  console.log(userCorrectPointDisplay) ;
+  showScore();
+} else {
+  userAnswers.textContent = "Please select an answer to continue."
+  console.log(userCorrectPointDisplay) ;
+  questionFive();
+}} ;
+
+// shows score page
+function showScore () {
   var scoreMultiplier = 20 ;
-  
-  const actualScore = x *= scoreMultiplier 
+  const actualScore = userCorrectPointDisplay *= scoreMultiplier ;
 
-  console.log(actualScore);
-  showScore(actualScore);
-}
+  console.log(userCorrectPointDisplay,scoreMultiplier);
+  console.log(actualScore)
 
-function showScore (x) {
-  timerEl.remove();
-  userAnswers.remove() ;
   answers.setAttribute("style", "visibility: hidden") ;
-  question.textContent = `Your score is ${x}! Please enter your intials here:`;
-  buttonSubmit.textContent = 'Continue' ;
-  buttonSubmit.addEventListener('click', saveScore(x));
+
 }
 
-function saveScore(x){
-  let inputBox = document.createElement("input");
-  inputBox.setAttribute('type', 'text');
-  var parent = document.getElementById("field")
-  parent.appendChild(inputBox);
-  inputBox.textContent= "Input Intials"
-  var value = inputBox.value;
-  buttonSubmit.addEventListener('click', local (value, x));
-}
 
-function local (y, x){ 
-  localStorage.setItem(y, (x));
-  buttonSubmit.addEventListener('click', showHighScore());
- }
-
-//  function showHighScore(){
-//   var highScore = localStorage.getItem("initials", "value") ;
-
-//   question.textContent = highScore
-//  }
+buttonSubmit.addEventListener("click", isAnswerRight);

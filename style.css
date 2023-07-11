@@ -39,22 +39,22 @@ h1.title {
 
 #answer1 {
   margin: 10px;
-  margin-left: 40px;
+  margin-right: 40px;
 }
 
 #answer2 {
   margin: 10px;
-  margin-left: 40px;
+  margin-right: 40px;
 }
 
 #answer3 {
   margin: 10px;
-  margin-left: 40px;
+  margin-right: 40px;
 }
 
 #answer4 {
   margin: 10px;
-  margin-left: 40px;
+  margin-right: 40px;
 }
 
 /* button styling */
@@ -81,6 +81,7 @@ div.button {
   padding: 16px;
   background-color: var(--startButton);
   font-size: larger;
+  text-align: center;
   color: azure;
   font-weight: bold;
   border: double purple 3px;

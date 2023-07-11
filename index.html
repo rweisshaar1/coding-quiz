@@ -11,17 +11,24 @@
   <h1 class = "title">
   </h1>
     <div>
-      <p class = "question">This is a quiz that will help you study what we have learned in this bootcamp so far. Once you click 'start', the quiz will begin. You will have 60 seconds to complete the quiz. Once the quiz is complete, there will be a Highscore board, so you can keep track of your studying!</p>
-        <span id = "answers">
-          <input type="radio" name="radio" id = "answer1"><lable class="label1"></lable><br> 
-          <input type="radio" name="radio" id = "answer2"><lable class="label2"></lable><br> 
-          <input type="radio" name="radio" id = "answer3"><lable class="label3"></lable><br> 
-          <input type="radio" name="radio" id = "answer4"><lable class="label4"></lable><br> 
-        </span>
-      <div class="button">
-          <button type = "button" class = "submit"></button>
+      <p class = "question"  id="field">This is a quiz that will help you study what we have learned in this bootcamp so far. Once you click 'start', the quiz will begin. You will have 60 seconds to complete the quiz. Once the quiz is complete, there will be a Highscore board, so you can keep track of your studying! 
+        <div>
+        </div>
+      </p>
+        <form id = "answers">
+          <input type="radio" name="radio" id = "answer1">
+          <label for = "answer1" class ="label1"></label><br> 
+          <input type="radio" name="radio" id = "answer2">
+          <label for="answer2" class ="label2"></label><br> 
+          <input type="radio" name="radio" id = "answer3">
+          <label for ="answer3" class="label3"></label><br> 
+          <input type = "radio" name="radio" id = "answer4">
+          <label for = "answer4" class="label4"></label><br> 
+        </form>
+        <div class="button">
           <button type= "button" id="submit"></button> 
-      </div>
+          <button type = "button" class = "submit"></button>
+        </div>
     </div>
   <footer class = "userAnswers"></footer>
 
